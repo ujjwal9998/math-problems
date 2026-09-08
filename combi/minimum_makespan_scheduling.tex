@@ -1,0 +1,48 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb}
+
+\title{Minimum Makespan Scheduling}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+Given the times taken to complete $n$ jobs, $t_1,t_2,\dots,t_n$, and $m$ identical machines, assign each job to a machine so that the total time taken to finish all jobs is minimized. For example, if $n=5$, $m=3$, and the job times are $5,4,4,6,7$ hours, the best schedule assigns jobs taking $4$ and $5$ hours to machine 1, jobs taking $4$ and $6$ hours to machine 2, and the $7$-hour job to machine 3. The total time is then $10$ hours.
+
+Consider the following greedy algorithm: order the jobs arbitrarily and, in this order, assign each job to the machine that has been given the least work so far. Let $T_{\mathrm{OPT}}$ be the total time taken by an optimal schedule, and let $T_A$ be the time taken by the greedy algorithm. Show that
+\[
+  \frac{T_A}{T_{\mathrm{OPT}}} \leq 2.
+\]
+In other words, this algorithm always finds a schedule taking at most twice as long as an optimal schedule.
+
+\section*{Solution}
+Without loss of generality, let the arbitrary ordering be $t_1,t_2,\dots,t_n$. We have
+\[
+  T_{\mathrm{OPT}}
+  \geq \max\left\{\frac{\sum_{i=1}^n t_i}{m}, \max\{t_1,t_2,\dots,t_n\}\right\}.
+\]
+Therefore,
+\[
+  2T_{\mathrm{OPT}}
+  \geq \frac{\sum_{i=1}^n t_i}{m} + \max\{t_1,t_2,\dots,t_n\}.
+\]
+
+Now, without loss of generality, let machine 1 be a machine with maximum load, so
+\[
+  T_A=\sum_{i\in \mathrm{machine}_1} t_i.
+\]
+Let $l$ be the last job assigned to machine 1. Immediately before assigning job $l$, machine 1 had the minimum load among all $m$ machines. Its load at that time is therefore at most the average load,
+\[
+  \frac{\sum_{i=1}^n t_i}{m}.
+\]
+Consequently,
+\[
+  T_A \leq \frac{\sum_{i=1}^n t_i}{m}+t_l
+  \leq \frac{\sum_{i=1}^n t_i}{m}+\max\{t_1,t_2,\dots,t_n\}
+  \leq 2T_{\mathrm{OPT}}.
+\]
+Thus $\frac{T_A}{T_{\mathrm{OPT}}}\leq 2$. \qed
+
+\end{document}
